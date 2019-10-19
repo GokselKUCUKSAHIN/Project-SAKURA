@@ -19,8 +19,8 @@ public class SunRise implements IObservable
     public SunRise()
     {
         // Positioning
-        body.setLayoutX(Main.width * 0.7);
-        body.setLayoutY(Main.height * 0.55);
+        body.setLayoutX(Main.width * 0.8);
+        body.setLayoutY(Main.height * 0.6);
 
         draw();
 
@@ -35,7 +35,7 @@ public class SunRise implements IObservable
         animation.setRate(1);
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.setAutoReverse(false);
-        //animation.play(); //while developing
+        animation.play(); //while developing
     }
 
     public void draw()
@@ -47,7 +47,7 @@ public class SunRise implements IObservable
 
         for (int i = 0; i < 360; i += 20)
         {
-            arcs.add(new Arc(0, 0, 100, 100, i, 10));
+            arcs.add(new Arc(0, 0, 125, 125, i, 10));
         }
         for (Arc arc : arcs)
         {

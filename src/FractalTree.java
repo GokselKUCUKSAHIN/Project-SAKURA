@@ -38,7 +38,6 @@ public class FractalTree implements IObservable
         }
         //
     }
-
     public void update(double value)
     {
         for (int i = 0; i < Branch.branches.size(); i++)
@@ -48,7 +47,6 @@ public class FractalTree implements IObservable
             temp.updateL(value);
         }
     }
-
     @Override
     public Node getNode()
     {
