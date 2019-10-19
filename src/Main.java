@@ -1,14 +1,18 @@
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 
 public class Main extends Application
 {
@@ -34,8 +38,8 @@ public class Main extends Application
         Pane root = new Pane();
         child = root.getChildren();
         //
-        //Sakura sakura = new Sakura();
-        //child.add(sakura.getNode());
+        Sakura sakura = new Sakura();
+
 
         SunRise sunRise = new SunRise();
         Rectangle ground = new Rectangle(width, height * 0.30);
@@ -45,13 +49,17 @@ public class Main extends Application
 
         FractalTree tree = new FractalTree();
 
+        Circle test = new Circle(0, 0, 15, Color.YELLOW);
+        Branch b1 = Branch.branches.get(Branch.branches.size() - 1);
+
+
+
         root.setOnMouseMoved(e -> {
             double angle = Utils.map(e.getSceneX(), 0, width, -90, 0);
             tree.update(angle);
         });
 
-        child.addAll(sunRise.getNode(), ground, tree.getNode());
-
+        child.addAll(sunRise.getNode(), ground, tree.getNode(), sakura.getNode(), test);
         //
         root.setOnKeyPressed(e -> {
             switch (e.getCode())
@@ -79,7 +87,11 @@ public class Main extends Application
         //
         update = new Timeline(new KeyFrame(Duration.millis(16), e -> {
             //60 fps
-            System.out.println("loop test");
+            //System.out.println("loop test");
+            Point2D p1 = b1.getFlowerPot();
+            test.setCenterX(p1.getX());
+            test.setCenterY(p1.getY());
+
         }));
         update.setCycleCount(Timeline.INDEFINITE);
         update.setRate(1);

@@ -14,6 +14,7 @@ public class Sakura implements IObservable
 
     Group body = new Group();
     static Rotate rotate = new Rotate();
+    Branch root;
 
     static
     {
@@ -34,11 +35,11 @@ public class Sakura implements IObservable
     private void draw()
     {
         ArrayList<Arc> arcs = new ArrayList<>();
-        Circle center = new Circle(0, 0, 2);
+        Circle center = new Circle(0, 0, 2.5);
         center.setFill(Color.HOTPINK);
         for (int i = 0; i < 5; i++)
         {
-            arcs.add(new Arc(0, 0, 3, 6, 0, 144));
+            arcs.add(new Arc(0, 0, 3, 6, 0, 138));
         }
         for (int i = 0; i < 5; i++)
         {
@@ -57,6 +58,14 @@ public class Sakura implements IObservable
         {
             body.getChildren().add(arc);
         }
+    }
+
+    public void setRoot(Branch branch)
+    {
+        this.root = branch;
+    }
+    public void update()
+    {
     }
 
     @Override

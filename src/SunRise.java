@@ -40,7 +40,7 @@ public class SunRise implements IObservable
 
     public void draw()
     {
-        Circle sun = new Circle(0, 0, 10, Color.RED);
+        Circle sun = new Circle(0, 0, 10, Color.valueOf("FF3A02"));
         sun.setStrokeWidth(0.6);
         sun.setStroke(Color.rgb(0, 0, 0, 0.8));
         ArrayList<Arc> arcs = new ArrayList<>();
@@ -52,7 +52,7 @@ public class SunRise implements IObservable
         for (Arc arc : arcs)
         {
             arc.setType(ArcType.ROUND);
-            arc.setFill(Color.RED);
+            arc.setFill(Color.valueOf("FF3A02").brighter());
             body.getChildren().add(arc);
         }
         body.getChildren().add(sun);

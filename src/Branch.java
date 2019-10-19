@@ -12,6 +12,7 @@ public class Branch
     private Point2D begin;
     private Point2D end;
     private Line node;
+    private Line shadow;
     private double prevAng = 0;
     private double angle = 0;
     private double length = 0;
@@ -22,7 +23,10 @@ public class Branch
     private double xoff = 12;
     public static double yoff = 1;
     private boolean done = false;
-    private double thickness = 15;  //6
+    private double thickness = 8;  //6
+    //
+    private boolean endOfTree = true; // is this end of tree
+    private Point2D flowerPot = new Point2D(0, 0);
 
     public Branch(Point2D begin, Point2D end)
     {
@@ -30,9 +34,12 @@ public class Branch
         this.begin = begin;
         this.end = end;
         node = new Line(begin.getX(), begin.getY(), end.getX(), end.getY());
+        shadow = new Line(begin.getX(), begin.getY(), end.getX(), end.getY());
         //node.setStrokeWidth(2.1);
         node.setStrokeWidth(this.thickness);
-        node.setStroke(Color.valueOf("2E302F")); //snow
+        shadow.setStrokeWidth(this.thickness * 2.5);
+        node.setStroke(Color.SNOW); // snow
+        shadow.setStroke(Color.valueOf("2E302FC1"));
         angle = Utils.calculateAngle(begin, end);
         length = Utils.distance(begin, end);
         branches.add(this);
@@ -41,6 +48,11 @@ public class Branch
     public Node getNode()
     {
         return this.node;
+    }
+
+    public Node getShadow()
+    {
+        return this.shadow;
     }
 
     public void branch()
@@ -55,6 +67,12 @@ public class Branch
         left.xoff = this.xoff += 0.1;
         right.setThickness(this.thickness * 0.8);
         left.setThickness(this.thickness * 0.8);
+        endOfTree = false;
+    }
+
+    public boolean isEndOfTree()
+    {
+        return this.endOfTree;
     }
 
     public double getLength()
@@ -67,6 +85,8 @@ public class Branch
         this.begin = begin;
         this.node.setStartX(begin.getX());
         this.node.setStartY(begin.getY());
+        this.shadow.setStartX(begin.getX());
+        this.shadow.setStartY(begin.getY());
     }
 
     public void setEnd(Point2D end)
@@ -75,12 +95,15 @@ public class Branch
         this.angle = Utils.calculateAngle(this.begin, this.end);
         this.node.setEndX(end.getX());
         this.node.setEndY(end.getY());
+        this.shadow.setEndX(end.getX());
+        this.shadow.setEndY(end.getY());
     }
 
     public void setThickness(double thickness)
     {
         this.thickness = thickness;
         this.node.setStrokeWidth(thickness);
+        this.shadow.setStrokeWidth(thickness * 2.5);
     }
 
     public void updateR(double updAngle)
@@ -105,6 +128,14 @@ public class Branch
             this.left.setEnd(endL);
             this.left.prevAng = this.angle;
         }
+        if (endOfTree)
+        {
+            this.flowerPot = this.end;
+        }
+    }
 
+    public Point2D getFlowerPot()
+    {
+        return this.flowerPot;
     }
 }

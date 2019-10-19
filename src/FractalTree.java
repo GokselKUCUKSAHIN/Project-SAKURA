@@ -32,6 +32,10 @@ public class FractalTree implements IObservable
         {
             Branch.branches.get(i).branch();
         }
+        for (Branch branch: Branch.branches)
+        {
+            body.getChildren().add(branch.getShadow());
+        }
         for (Branch branch : Branch.branches)
         {
             body.getChildren().add(branch.getNode());
