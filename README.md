@@ -18,3 +18,7 @@ Japan Stylized Art JavaFX
 ![WhatsApp Image 2019-10-19 at 01 17 33](https://user-images.githubusercontent.com/33639948/67150952-3437da00-f2c7-11e9-8912-1cf63aab0904.jpeg)
 
 ![WhatsApp Image 2019-10-19 at 02 58 27](https://user-images.githubusercontent.com/33639948/67150953-36019d80-f2c7-11e9-8aaa-e521bcbb7ba6.jpeg)
+
+![image](https://user-images.githubusercontent.com/33639948/67165829-682c0180-f392-11e9-87c3-3bcb42bd8fa6.png)
+
+![image](https://user-images.githubusercontent.com/33639948/67165830-68c49800-f392-11e9-84aa-bb75d983a804.png)
