@@ -19,6 +19,12 @@ public class Sakura implements IObservable
     private double size = 1;
     private boolean isSnapOff = false;
 
+    private double yvel = 0;
+    private double yacc = 0.01;
+    private double xvel = 0;
+    private double xacc = 0;
+    private double wind = Utils.getRandom(12345);
+
     static
     {
         rotate.setAngle(72);
@@ -31,8 +37,10 @@ public class Sakura implements IObservable
         body.setLayoutX(-30);
         body.setLayoutY(-30);
         draw();
-        body.setScaleX(2);
-        body.setScaleY(2);
+        size = Utils.getRandom(1, 1.9);
+        body.setScaleX(size);
+        body.setScaleY(size);
+        body.setRotate(Utils.getRandom(360));
     }
 
     private void draw()
@@ -70,9 +78,36 @@ public class Sakura implements IObservable
 
     public void update()
     {
-        Point2D pnt = root.getFlowerPot();
-        this.body.setLayoutX(pnt.getX());
-        this.body.setLayoutY(pnt.getY());
+        if (!isSnapOff)
+        {
+            Point2D pnt = root.getFlowerPot();
+            this.body.setLayoutX(pnt.getX());
+            this.body.setLayoutY(pnt.getY());
+            if (size > 2.3)
+            {
+                isSnapOff = true;
+            } else
+            {
+                size += 0.001;
+            }
+        } else
+        {
+            this.body.setLayoutY(body.getLayoutY() + yvel);
+            this.body.setLayoutX(body.getLayoutX() + xvel);
+            xacc = SimpleNoise.noise(wind, 0, -0.01, 0.025, true);
+            yvel += yacc;
+            xvel += xacc;
+
+            if (this.body.getLayoutY() > Main.height + 2)
+            {
+                isSnapOff = false;
+                size = Utils.getRandom(1, 1.9);
+                body.setScaleX(size);
+                body.setScaleY(size);
+                yvel = 0;
+                xvel = 0;
+            }
+        }
     }
 
     @Override

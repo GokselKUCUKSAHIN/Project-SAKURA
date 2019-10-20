@@ -30,16 +30,18 @@ public class Main extends Application
     public static final int height = 800;
 
     public static double angleConstant = 30;
-    public static double xOffset = -200;
-    public static double yOffset = -50;
-
+    public static double xOffset = -180;
+    public static double yOffset = 0;
+    //
     ImageView imageViewBack;
     Image imgBack;
     String imgBackURL = "img\\back.png";
-
+    //
     ImageView imageViewFront;
     Image imgFront;
     String imgFrontURL = "img\\front.png";
+    //
+    private static double perlinOffset = Utils.getRandom(123456);
 
 
     //private static Color backcolor = Color.rgb(51, 51, 51);
@@ -53,11 +55,13 @@ public class Main extends Application
         Pane root = new Pane();
         child = root.getChildren();
 
+        //Back End
         imgBack = new Image(new FileInputStream(imgBackURL));
         imageViewBack = new ImageView(imgBack);
         imageViewBack.setFitWidth(width);
         imageViewBack.setFitHeight(height);
 
+        //Front End
         imgFront = new Image(new FileInputStream(imgFrontURL));
         imageViewFront = new ImageView(imgFront);
         imageViewFront.setFitWidth(width);
@@ -66,14 +70,9 @@ public class Main extends Application
 
         SunRise sunRise = new SunRise();
 
-        //Rectangle ground = new Rectangle(width, height * 0.30);
-
-        //ground.setLayoutY(height * 0.7);
-        //ground.setFill(Color.GREEN);
-
         FractalTree tree = new FractalTree();
 
-        child.addAll(sunRise.getNode(), imageViewBack, tree.getNode()); //, sakura.getNode()); //, test);
+        child.addAll(sunRise.getNode(), imageViewBack, tree.getNode());
 
         // End of Tree Branches
         ArrayList<Branch> endOfTrees = new ArrayList<>();
@@ -95,10 +94,14 @@ public class Main extends Application
         }
         child.add(imageViewFront);
 
-        root.setOnMouseMoved(e -> {
+        /*root.setOnMouseMoved(e -> {
             double angle = Utils.map(e.getSceneX(), 0, width, -90, 0);
             tree.update(angle);
-        });
+            for (Sakura sakura : sakuras)
+            {
+                sakura.update();
+            }
+        });*/
 
         //
         root.setOnKeyPressed(e -> {
@@ -125,17 +128,19 @@ public class Main extends Application
             }
         });
         //
-        update = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+        update = new Timeline(new KeyFrame(Duration.millis(32), e -> {
             //60 fps
-            //System.out.println("loop test");
-            //Point2D p1 = b1.getFlowerPot();
-            //test.setCenterX(p1.getX());
-            //test.setCenterY(p1.getY());
+            double angle = SimpleNoise.noise(perlinOffset, 0, -90, 0, true);
+            tree.update(angle);
             for (Sakura sakura : sakuras)
             {
                 sakura.update();
             }
 
+
+
+
+            perlinOffset += 0.0025;
         }));
         update.setCycleCount(Timeline.INDEFINITE);
         update.setRate(1);
