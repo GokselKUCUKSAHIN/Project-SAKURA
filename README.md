@@ -22,3 +22,7 @@ Japan Stylized Art JavaFX
 ![image](https://user-images.githubusercontent.com/33639948/67165829-682c0180-f392-11e9-87c3-3bcb42bd8fa6.png)
 
 ![image](https://user-images.githubusercontent.com/33639948/67165830-68c49800-f392-11e9-84aa-bb75d983a804.png)
+
+![image](https://user-images.githubusercontent.com/33639948/67166865-3ae45100-f39c-11e9-8912-b2f6e4205229.png)
+
+![image](https://user-images.githubusercontent.com/33639948/67166866-3b7ce780-f39c-11e9-949b-b1260204bc7b.png)
