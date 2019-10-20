@@ -39,7 +39,7 @@ public class Branch
         node.setStrokeWidth(this.thickness);
         shadow.setStrokeWidth(this.thickness * 2.5);
         node.setStroke(Color.SNOW); // snow
-        shadow.setStroke(Color.valueOf("2E302FC1"));
+        shadow.setStroke(Color.valueOf("2E302F")); //c1
         angle = Utils.calculateAngle(begin, end);
         length = Utils.distance(begin, end);
         branches.add(this);

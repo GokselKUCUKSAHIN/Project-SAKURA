@@ -1,3 +1,4 @@
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -12,9 +13,11 @@ import java.util.ArrayList;
 public class Sakura implements IObservable
 {
 
-    Group body = new Group();
-    static Rotate rotate = new Rotate();
-    Branch root;
+    private Group body = new Group();
+    private static Rotate rotate = new Rotate();
+    private Branch root;
+    private double size = 1;
+    private boolean isSnapOff = false;
 
     static
     {
@@ -25,11 +28,11 @@ public class Sakura implements IObservable
 
     public Sakura()
     {
-        body.setLayoutX(Main.width / 2);
-        body.setLayoutY(Main.height / 2);
+        body.setLayoutX(-30);
+        body.setLayoutY(-30);
         draw();
-        body.setScaleX(15);
-        body.setScaleY(15);
+        body.setScaleX(2);
+        body.setScaleY(2);
     }
 
     private void draw()
@@ -64,8 +67,12 @@ public class Sakura implements IObservable
     {
         this.root = branch;
     }
+
     public void update()
     {
+        Point2D pnt = root.getFlowerPot();
+        this.body.setLayoutX(pnt.getX());
+        this.body.setLayoutY(pnt.getY());
     }
 
     @Override

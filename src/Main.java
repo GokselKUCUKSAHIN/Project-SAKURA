@@ -6,12 +6,18 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import javax.management.ImmutableDescriptor;
+import java.io.FileInputStream;
+import java.util.ArrayList;
 
 
 public class Main extends Application
@@ -27,6 +33,15 @@ public class Main extends Application
     public static double xOffset = -200;
     public static double yOffset = -50;
 
+    ImageView imageViewBack;
+    Image imgBack;
+    String imgBackURL = "img\\back.png";
+
+    ImageView imageViewFront;
+    Image imgFront;
+    String imgFrontURL = "img\\front.png";
+
+
     //private static Color backcolor = Color.rgb(51, 51, 51);
     private static Color backcolor = Color.SNOW;
 
@@ -37,29 +52,54 @@ public class Main extends Application
     {
         Pane root = new Pane();
         child = root.getChildren();
-        //
-        Sakura sakura = new Sakura();
+
+        imgBack = new Image(new FileInputStream(imgBackURL));
+        imageViewBack = new ImageView(imgBack);
+        imageViewBack.setFitWidth(width);
+        imageViewBack.setFitHeight(height);
+
+        imgFront = new Image(new FileInputStream(imgFrontURL));
+        imageViewFront = new ImageView(imgFront);
+        imageViewFront.setFitWidth(width);
+        imageViewFront.setFitHeight(height);
 
 
         SunRise sunRise = new SunRise();
-        Rectangle ground = new Rectangle(width, height * 0.30);
 
-        ground.setLayoutY(height * 0.7);
-        ground.setFill(Color.GREEN);
+        //Rectangle ground = new Rectangle(width, height * 0.30);
+
+        //ground.setLayoutY(height * 0.7);
+        //ground.setFill(Color.GREEN);
 
         FractalTree tree = new FractalTree();
 
-        Circle test = new Circle(0, 0, 15, Color.YELLOW);
-        Branch b1 = Branch.branches.get(Branch.branches.size() - 1);
+        child.addAll(sunRise.getNode(), imageViewBack, tree.getNode()); //, sakura.getNode()); //, test);
 
-
+        // End of Tree Branches
+        ArrayList<Branch> endOfTrees = new ArrayList<>();
+        for (Branch branch : Branch.branches)
+        {
+            if (branch.isEndOfTree())
+            {
+                endOfTrees.add(branch);
+            }
+        }
+        // Sakura List
+        ArrayList<Sakura> sakuras = new ArrayList<>();
+        for (Branch branch : endOfTrees)
+        {
+            Sakura temp = new Sakura();
+            temp.setRoot(branch);
+            sakuras.add(temp);
+            child.add(temp.getNode());
+        }
+        child.add(imageViewFront);
 
         root.setOnMouseMoved(e -> {
             double angle = Utils.map(e.getSceneX(), 0, width, -90, 0);
             tree.update(angle);
         });
 
-        child.addAll(sunRise.getNode(), ground, tree.getNode(), sakura.getNode(), test);
         //
         root.setOnKeyPressed(e -> {
             switch (e.getCode())
@@ -88,9 +128,13 @@ public class Main extends Application
         update = new Timeline(new KeyFrame(Duration.millis(16), e -> {
             //60 fps
             //System.out.println("loop test");
-            Point2D p1 = b1.getFlowerPot();
-            test.setCenterX(p1.getX());
-            test.setCenterY(p1.getY());
+            //Point2D p1 = b1.getFlowerPot();
+            //test.setCenterX(p1.getX());
+            //test.setCenterY(p1.getY());
+            for (Sakura sakura : sakuras)
+            {
+                sakura.update();
+            }
 
         }));
         update.setCycleCount(Timeline.INDEFINITE);
