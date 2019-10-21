@@ -38,7 +38,7 @@ public class Sakura implements IObservable
         body.setLayoutX(-30);
         body.setLayoutY(-30);
         draw();
-        size = Utils.getRandom(1, 1.9);
+        size = Utils.getRandom(1.3, 1.9);
         body.setScaleX(size);
         body.setScaleY(size);
         body.setRotate(Utils.getRandom(360));
@@ -117,14 +117,14 @@ public class Sakura implements IObservable
         {
             this.body.setLayoutY(body.getLayoutY() + yvel);
             this.body.setLayoutX(body.getLayoutX() + xvel);
-            xacc = SimpleNoise.noise(wind, 0, -0.01, 0.025, true);
+            xacc = SimpleNoise.noise(wind, 0, -0.013, 0.025, true);
             yvel += yacc;
             xvel += xacc;
-
+            wind += 0.005;
             if (this.body.getLayoutY() > Main.height + 2)
             {
                 isSnapOff = false;
-                size = Utils.getRandom(1, 1.9);
+                size = Utils.getRandom(1.3, 1.9);
                 body.setScaleX(size);
                 body.setScaleY(size);
                 yvel = 0;

@@ -42,11 +42,11 @@ public class Main extends Application
     //
     ImageView imageViewBack;
     Image imgBack;
-    String imgBackURL = "img\\back.png";
+    //String imgBackURL = "img\\back.png";
     //
     ImageView imageViewFront;
     Image imgFront;
-    String imgFrontURL = "img\\front.png";
+    //String imgFrontURL = "img\\front.png";
     //
     private static double perlinOffset = Utils.getRandom(123456);
 
@@ -73,13 +73,15 @@ public class Main extends Application
         child = root.getChildren();
 
         //Back End
-        imgBack = new Image(new FileInputStream(imgBackURL));
+        imgBack = new Image(String.valueOf(this.getClass().getResource("/back.png")));
+        //imgBack = new Image(new FileInputStream(imgBackURL));
         imageViewBack = new ImageView(imgBack);
         imageViewBack.setFitWidth(width);
         imageViewBack.setFitHeight(height);
 
         //Front End
-        imgFront = new Image(new FileInputStream(imgFrontURL));
+        imgFront = new Image(String.valueOf(this.getClass().getResource("/front.png")));
+        //imgFront = new Image(new FileInputStream(imgFrontURL));
         imageViewFront = new ImageView(imgFront);
         imageViewFront.setFitWidth(width);
         imageViewFront.setFitHeight(height);
