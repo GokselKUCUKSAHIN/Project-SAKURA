@@ -1,5 +1,8 @@
 # Project-SAKURA
-Japan Stylized Art JavaFX
+
+## Fractal Sakura Tree
+
+
 # Still Under Development
 
 ## Dev Logs
