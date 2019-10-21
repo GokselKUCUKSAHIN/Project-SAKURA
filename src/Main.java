@@ -2,7 +2,9 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -13,11 +15,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import javax.management.ImmutableDescriptor;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 
 public class Main extends Application
@@ -44,6 +51,8 @@ public class Main extends Application
     private static double perlinOffset = Utils.getRandom(123456);
 
 
+    public static ExecutorService executorService;
+
     //private static Color backcolor = Color.rgb(51, 51, 51);
     private static Color backcolor = Color.SNOW;
 
@@ -52,6 +61,14 @@ public class Main extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
+        executorService = Executors.newFixedThreadPool(4,
+                (Runnable r) -> {
+                    Thread t = new Thread(r);
+                    t.setDaemon(true);
+                    return t;
+                }
+        );
+
         Pane root = new Pane();
         child = root.getChildren();
 
@@ -66,7 +83,6 @@ public class Main extends Application
         imageViewFront = new ImageView(imgFront);
         imageViewFront.setFitWidth(width);
         imageViewFront.setFitHeight(height);
-
 
         SunRise sunRise = new SunRise();
 
@@ -125,10 +141,19 @@ public class Main extends Application
                     System.out.println("Child Count: " + child.size());
                     break;
                 }
+                case F4:
+                {
+                    // switch Graphics
+                    for (Sakura sakura:sakuras)
+                    {
+                        sakura.switchGraphics();
+                    }
+                    break;
+                }
             }
         });
         //
-        update = new Timeline(new KeyFrame(Duration.millis(32), e -> {
+        update = new Timeline(new KeyFrame(Duration.millis(16), e -> {
             //60 fps
             double angle = SimpleNoise.noise(perlinOffset, 0, -90, 0, true);
             tree.update(angle);
@@ -136,10 +161,6 @@ public class Main extends Application
             {
                 sakura.update();
             }
-
-
-
-
             perlinOffset += 0.0025;
         }));
         update.setCycleCount(Timeline.INDEFINITE);
@@ -152,6 +173,14 @@ public class Main extends Application
         stage.setScene(new Scene(root, width - 10, height - 10, backcolor));
         stage.show();
         root.requestFocus();
+
+        /*stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });*/
     }
 
     public static void main(String[] args)

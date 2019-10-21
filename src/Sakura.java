@@ -24,6 +24,7 @@ public class Sakura implements IObservable
     private double xvel = 0;
     private double xacc = 0;
     private double wind = Utils.getRandom(12345);
+    private boolean graphics = false;
 
     static
     {
@@ -43,7 +44,16 @@ public class Sakura implements IObservable
         body.setRotate(Utils.getRandom(360));
     }
 
+
     private void draw()
+    {
+        Circle center = new Circle(0, 0, 4);
+        center.setFill(Color.HOTPINK);
+        center.setStroke(Color.DEEPPINK);
+        center.setStrokeWidth(0.5);
+        this.body.getChildren().addAll(center);
+    }
+    private void draw2()
     {
         ArrayList<Arc> arcs = new ArrayList<>();
         Circle center = new Circle(0, 0, 2.5);
@@ -71,6 +81,19 @@ public class Sakura implements IObservable
         }
     }
 
+    public void switchGraphics()
+    {
+        body.getChildren().clear();
+        graphics = !graphics;
+        if(graphics)
+        {
+            draw2();
+        }
+        else
+        {
+            draw();
+        }
+    }
     public void setRoot(Branch branch)
     {
         this.root = branch;
