@@ -1,6 +1,7 @@
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -37,8 +38,8 @@ public class Sakura implements IObservable
     {
         body.setLayoutX(-30);
         body.setLayoutY(-30);
-        draw();
-        size = Utils.getRandom(1.3, 1.9);
+        draw3();
+        size = Utils.getRandom(1.3, 3);
         body.setScaleX(size);
         body.setScaleY(size);
         body.setRotate(Utils.getRandom(360));
@@ -80,6 +81,13 @@ public class Sakura implements IObservable
             body.getChildren().add(arc);
         }
     }
+    private void draw3()
+    {
+        ImageView iv = new ImageView(Main.sakura);
+        iv.setFitHeight(9);
+        iv.setFitWidth(9);
+        this.body.getChildren().addAll(iv);
+    }
 
     public void switchGraphics()
     {
@@ -106,7 +114,7 @@ public class Sakura implements IObservable
             Point2D pnt = root.getFlowerPot();
             this.body.setLayoutX(pnt.getX());
             this.body.setLayoutY(pnt.getY());
-            if (size > 2.3)
+            if (size > 3.3)
             {
                 isSnapOff = true;
             } else
@@ -130,9 +138,14 @@ public class Sakura implements IObservable
                 yvel = 0;
                 xvel = 0;
             }
+            rotateThis();
         }
     }
 
+    private void rotateThis()
+    {
+        body.setRotate(body.getRotate()+1);
+    }
     @Override
     public Node getNode()
     {

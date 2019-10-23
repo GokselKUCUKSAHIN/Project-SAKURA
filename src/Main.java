@@ -48,6 +48,8 @@ public class Main extends Application
     Image imgFront;
     //String imgFrontURL = "img\\front.png";
     //
+    public static Image sakura;
+
     private static double perlinOffset = Utils.getRandom(123456);
 
 
@@ -85,6 +87,8 @@ public class Main extends Application
         imageViewFront = new ImageView(imgFront);
         imageViewFront.setFitWidth(width);
         imageViewFront.setFitHeight(height);
+
+        sakura = new Image(String.valueOf(this.getClass().getResource("/sakura.png")));
 
         SunRise sunRise = new SunRise();
 
@@ -157,7 +161,7 @@ public class Main extends Application
         //
         update = new Timeline(new KeyFrame(Duration.millis(16), e -> {
             //60 fps
-            double angle = SimpleNoise.noise(perlinOffset, 0, -90, 0, true);
+            double angle = SimpleNoise.noise(perlinOffset, 0, -80, -5, true);
             tree.update(angle);
             for (Sakura sakura : sakuras)
             {
