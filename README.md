@@ -2,10 +2,7 @@
 
 ## Fractal Sakura Tree
 
-# Still Under Development!
-
 ## Dev Logs
-
 ### Some Screen Shots from Pre Alpha version
 
 ![WhatsApp Image 2019-10-19 at 00 36 31](https://user-images.githubusercontent.com/33639948/67150946-2f732600-f2c7-11e9-9c41-a25f60c432b6.jpeg)
