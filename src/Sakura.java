@@ -132,7 +132,7 @@ public class Sakura implements IObservable
             if (this.body.getLayoutY() > Main.height + 2)
             {
                 isSnapOff = false;
-                size = Utils.getRandom(1.3, 1.9);
+                size = Utils.getRandom(1.3, 3);
                 body.setScaleX(size);
                 body.setScaleY(size);
                 yvel = 0;

@@ -49,9 +49,14 @@ public class Main extends Application
     //String imgFrontURL = "img\\front.png";
     //
     public static Image sakura;
+    //
+    public static Image samurai;
+    public static Image bandana1;
+    public static Image bandana2;
+    public static Image bandana3;
+    private boolean egg = false;
 
     private static double perlinOffset = Utils.getRandom(123456);
-
 
     public static ExecutorService executorService;
 
@@ -89,12 +94,29 @@ public class Main extends Application
         imageViewFront.setFitHeight(height);
 
         sakura = new Image(String.valueOf(this.getClass().getResource("/sakura.png")));
+        //
+        samurai = new Image(String.valueOf(this.getClass().getResource("/samurai/samurai.png")));
+        bandana1 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana1.png")));
+        bandana2 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana2.png")));
+        bandana3 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana3.png")));
 
+        //samurai = new Image(String.valueOf(this.getClass().getResource("/samurai.png")));
+        /*ImageView samuraiIV = new ImageView(samurai);
+        samuraiIV.setFitHeight(250);
+        samuraiIV.setFitWidth(250);
+        samuraiIV.setScaleX(-1);
+        samuraiIV.setX(width - 350);
+        samuraiIV.setY(560);*/
+        //
+        Samurai samurai = new Samurai();
+        samurai.setLocation(width - 350, 560);
+        samurai.getNode().setVisible(false);
+        //
         SunRise sunRise = new SunRise();
-
+        //
         FractalTree tree = new FractalTree();
-
-        child.addAll(sunRise.getNode(), imageViewBack, tree.getNode());
+        //
+        child.addAll(sunRise.getNode(), imageViewBack, samurai.getNode(), tree.getNode());
 
         // End of Tree Branches
         ArrayList<Branch> endOfTrees = new ArrayList<>();
@@ -114,7 +136,8 @@ public class Main extends Application
             sakuras.add(temp);
             child.add(temp.getNode());
         }
-        child.add(imageViewFront);
+
+        child.addAll(imageViewFront);//t,test);
 
         /*root.setOnMouseMoved(e -> {
             double angle = Utils.map(e.getSceneX(), 0, width, -90, 0);
@@ -150,10 +173,25 @@ public class Main extends Application
                 case F4:
                 {
                     // switch Graphics
-                    for (Sakura sakura:sakuras)
+                    for (Sakura sakura : sakuras)
                     {
                         sakura.switchGraphics();
                     }
+                    break;
+                }
+                case F9:
+                {
+                    if (egg)
+                    {
+                        samurai.getNode().setVisible(true);
+                        samurai.playAnim();
+                    } else
+                    {
+                        samurai.getNode().setVisible(false);
+                        samurai.pauseAnim();
+                    }
+                    egg = !egg;
+
                     break;
                 }
             }
