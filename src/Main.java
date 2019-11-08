@@ -54,6 +54,14 @@ public class Main extends Application
     public static Image bandana1;
     public static Image bandana2;
     public static Image bandana3;
+    public static Image bandana4;
+    public static Image bandana5;
+    public static Image bandana6;
+    public static Image bandana7;
+    public static Image bandana8;
+    public static Image bandana9;
+    public static Image bandana10;
+
     private boolean egg = false;
 
     private static double perlinOffset = Utils.getRandom(123456);
@@ -68,45 +76,34 @@ public class Main extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        executorService = Executors.newFixedThreadPool(4,
-                (Runnable r) -> {
-                    Thread t = new Thread(r);
-                    t.setDaemon(true);
-                    return t;
-                }
-        );
-
         Pane root = new Pane();
         child = root.getChildren();
-
         //Back End
         imgBack = new Image(String.valueOf(this.getClass().getResource("/back.png")));
         //imgBack = new Image(new FileInputStream(imgBackURL));
         imageViewBack = new ImageView(imgBack);
         imageViewBack.setFitWidth(width);
         imageViewBack.setFitHeight(height);
-
         //Front End
         imgFront = new Image(String.valueOf(this.getClass().getResource("/front.png")));
-        //imgFront = new Image(new FileInputStream(imgFrontURL));
+        //
         imageViewFront = new ImageView(imgFront);
         imageViewFront.setFitWidth(width);
         imageViewFront.setFitHeight(height);
-
+        //
         sakura = new Image(String.valueOf(this.getClass().getResource("/sakura.png")));
         //
         samurai = new Image(String.valueOf(this.getClass().getResource("/samurai/samurai.png")));
         bandana1 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana1.png")));
         bandana2 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana2.png")));
         bandana3 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana3.png")));
-
-        //samurai = new Image(String.valueOf(this.getClass().getResource("/samurai.png")));
-        /*ImageView samuraiIV = new ImageView(samurai);
-        samuraiIV.setFitHeight(250);
-        samuraiIV.setFitWidth(250);
-        samuraiIV.setScaleX(-1);
-        samuraiIV.setX(width - 350);
-        samuraiIV.setY(560);*/
+        bandana4 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana4.png")));
+        bandana5 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana5.png")));
+        bandana6 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana6.png")));
+        bandana7 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana7.png")));
+        bandana8 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana8.png")));
+        bandana9 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana9.png")));
+        bandana9 = new Image(String.valueOf(this.getClass().getResource("/samurai/bandana10.png")));
         //
         Samurai samurai = new Samurai();
         samurai.setLocation(width - 350, 560);
@@ -137,18 +134,8 @@ public class Main extends Application
             child.add(temp.getNode());
         }
 
-        child.addAll(imageViewFront);//t,test);
+        child.addAll(imageViewFront); // t,test);
 
-        /*root.setOnMouseMoved(e -> {
-            double angle = Utils.map(e.getSceneX(), 0, width, -90, 0);
-            tree.update(angle);
-            for (Sakura sakura : sakuras)
-            {
-                sakura.update();
-            }
-        });*/
-
-        //
         root.setOnKeyPressed(e -> {
             switch (e.getCode())
             {
@@ -181,7 +168,7 @@ public class Main extends Application
                 }
                 case F9:
                 {
-                    if (egg)
+                    if (!egg)
                     {
                         samurai.getNode().setVisible(true);
                         samurai.playAnim();
@@ -191,7 +178,6 @@ public class Main extends Application
                         samurai.pauseAnim();
                     }
                     egg = !egg;
-
                     break;
                 }
             }
@@ -217,14 +203,6 @@ public class Main extends Application
         stage.setScene(new Scene(root, width - 10, height - 10, backcolor));
         stage.show();
         root.requestFocus();
-
-        /*stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent e) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });*/
     }
 
     public static void main(String[] args)
